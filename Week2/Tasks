@@ -1,0 +1,44 @@
+#lang racket
+
+; TASK 4
+
+(define (pow x y)
+  (if
+   (= y 1) x
+   (* x (pow x (- y 1)))))
+
+(define (count-digits n)
+  (if
+   (= n 0) 0
+   (+ 1 (count-digits (quotient n 10)))))
+
+(define (reverse-int n)
+  (define (last-digit n i)
+    (if
+     (= i 0) (modulo n 10)
+     (+ (* (modulo n 10) (pow 10 i)) (last-digit (quotient n 10) (- i 1)))))
+  (last-digit n (- (count-digits n) 1)))
+
+
+; TASK 5
+
+(define (palindrome? n)
+  (if
+   (= n (reverse-int n)) #t
+   #f
+   ))
+
+; TASK 6
+
+(define (divisors-sum n)
+  (define (divide i sum)
+    (if
+     (= i n) (+ sum i)
+     (if (= (remainder n i) 0)
+         (divide (+ i 1) (+ sum i))
+         (divide (+ i 1) sum))))
+  (divide 1 0))
+
+
+
+
